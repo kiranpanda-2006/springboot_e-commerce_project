@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Error')}">
+</head>
+<body>
+    <div th:replace="~{fragments/layout :: navbar('home')}">
+    </div>
+
+    <section class="section">
+        <div class="container" style="max-width:640px">
+            <div class="panel form-card">
+                <h2>Something went wrong</h2>
+                <p class="muted">Please try again or return to home.</p>
+                <a class="btn btn-primary" th:href="@{/}">Go home</a>
+            </div>
+        </div>
+    </section>
+
+    <div th:replace="~{fragments/layout :: footer()}">
+    </div>
+</body>
+</html>

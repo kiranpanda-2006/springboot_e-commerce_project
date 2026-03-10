@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Home')}"></head>
+<body>
+  <th:block th:replace="~{fragments/navbar :: navbar('home')}"></th:block>
+  <th:block th:replace="~{fragments/alerts :: alerts}"></th:block>
+  
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="container hero-grid">
+    <div class="glass hero-panel">
+      <span class="badge"><i class="fa-solid fa-sparkles"></i> Creative UI refresh for your backend</span>
+      <h1>Shop faster with a bold, premium, popup-driven FlipMart experience.</h1>
+      <p>Modern hero section, expressive cards, toast notifications, polished forms, and a responsive shopping flow that matches your Spring Boot routes.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:22px;">
+        <a class="btn" th:href="@{/products}">Explore Products</a>
+        <a class="btn btn-outline" th:href="@{/register}">Create Account</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="text-muted">Live categories</span><strong th:text="${#lists.size(category)}">6</strong></div>
+        <div class="stat"><span class="text-muted">Featured items</span><strong th:text="${#lists.size(products)}">8</strong></div>
+        <div class="stat"><span class="text-muted">Secure payments</span><strong>24/7</strong></div>
+      </div>
+    </div>
+    <div class="glass hero-panel">
+      <div class="section-title"><h2>What’s new</h2></div>
+      <div class="grid">
+        <div class="metric"><span class="badge"><i class="fa-solid fa-layer-group"></i> UI block</span><strong>Reusable fragments</strong><div class="text-muted">Navbar, footer, alerts, modal system, and script hooks.</div></div>
+        <div class="metric"><span class="badge"><i class="fa-solid fa-bag-shopping"></i> Commerce flow</span><strong>Backend-ready pages</strong><div class="text-muted">Products, cart, order checkout, user account, and admin dashboard.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="container py-5">
+  <div class="section-title"><h2>Popular categories</h2><a class="btn btn-outline" th:href="@{/products}">Shop all</a></div>
+  <div class="category-grid">
+    <a th:each="cat : ${category}" class="card category-card" th:href="@{/products(category=${cat.name})}">
+      <span class="badge" th:text="${cat.isActive} ? 'Available' : 'Hidden'">Available</span>
+      <h3 class="mt-4" th:text="${cat.name}">Category</h3>
+      <p class="text-muted">Tap to browse matching products with a sleek updated catalog page.</p>
+      <img th:if="${cat.imageName != null}" th:src="@{'/img/category_img/' + ${cat.imageName}}" alt="category">
+    </a>
+  </div>
+</section>
+<section class="container py-5">
+  <div class="section-title"><h2>Featured products</h2><span class="badge"><i class="fa-solid fa-fire"></i> limited picks</span></div>
+  <div class="product-grid">
+    <div class="card product-card" th:each="p : ${products}">
+      <a class="product-media" th:href="@{'/product/' + ${p.id}}"><img th:src="@{'/img/product_img/' + ${p.image}}" alt="product"></a>
+      <div class="product-body">
+        <div class="chip" th:text="${p.category}">Category</div>
+        <h3 class="product-title mt-3" th:text="${p.title}">Product Title</h3>
+        <div class="price-row">
+          <span class="price">₹<span th:text="${p.discountPrice != null ? p.discountPrice : p.price}">0</span></span>
+          <span class="old-price" th:if="${p.discount > 0}">₹<span th:text="${p.price}">0</span></span>
+          <span class="badge" th:if="${p.discount > 0}" th:text="${p.discount + '% off'}"></span>
+        </div>
+        <div class="product-actions">
+          <a class="btn btn-outline" th:href="@{'/product/' + ${p.id}}">View</a>
+          <a class="btn" th:if="${user != null and user.role == 'ROLE_USER'}" th:href="@{/user/addCart(pid=${p.id},uid=${user.id})}">Add Cart</a>
+          <a class="btn" th:if="${user == null}" th:href="@{/signin}">Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+  <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head('Add admin')}"></th:block>
+<body>
+  <th:block th:replace="~{fragments/navbar :: navbar('admin')}"></th:block>
+  <th:block th:replace="~{fragments/alerts :: alerts}"></th:block>
+  <section class="container py-5"><div class="sidebar-layout"><aside class="card side-nav"><a th:href="@{/admin/}">Overview</a><a th:href="@{/admin/category}">Categories</a><a th:href="@{/admin/loadAddProduct}">Add product</a><a th:href="@{/admin/products}">Products</a><a th:href="@{/admin/orders}">Orders</a><a th:href="@{/admin/users(type=1)}">Users</a><a th:href="@{/admin/add-admin}">Add admin</a><a th:href="@{/admin/profile}">Profile</a></aside><main><div class="card form-card"><div class="section-title"><h1>Add admin</h1></div><form th:action="@{/admin/save-admin}" method="post" enctype="multipart/form-data"><div class="form-grid"><div class="field"><label>Name</label><input name="name" required></div><div class="field"><label>Email</label><input type="email" name="email" required></div><div class="field"><label>Mobile</label><input name="mobileNumber" required></div><div class="field"><label>Password</label><input type="password" name="password" required></div><div class="field"><label>Address</label><input name="address"></div><div class="field"><label>City</label><input name="city"></div><div class="field"><label>State</label><input name="state"></div><div class="field"><label>Pincode</label><input name="pincode"></div><div class="field"><label>Profile image</label><input type="file" name="img"></div></div><button class="btn mt-4" type="submit">Create admin</button></form></div></main></div></section>
+  <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+  <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+</body>
+</html>

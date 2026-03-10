@@ -1,0 +1,31 @@
+spring.datasource.url=jdbc:mysql://localhost:3306/ecommerce_db
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.username=root
+spring.datasource.password=root
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.hibernate.ddl-auto=update
+
+#spring.main.allow-circular-references=true
+
+spring.mail.host=smtp.gmail.com
+# IMPORTANT:
+# For Gmail, use a 16-char App Password (Google Account -> Security -> App passwords)
+# Keep secrets out of git by using env vars.
+spring.mail.username=${kiranpanda@gmail.com}
+spring.mail.password=${zqpk uewu epcw hixb}
+spring.mail.port=587
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
+spring.mail.properties.mail.smtp.connectiontimeout=5000
+spring.mail.properties.mail.smtp.timeout=5000
+spring.mail.properties.mail.smtp.writetimeout=5000
+
+# Optional: turn on for debugging SMTP/security issues
+# logging.level.org.springframework.mail=DEBUG
+# logging.level.org.springframework.security=DEBUG
+
+spring.servlet.multipart.max-file-size=50MB
+spring.servlet.multipart.max-request-size=50MB
+
+rupee.sign=${RUPEE_SIGN:&#8377;}

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head('My cart')}"></th:block>
+<body>
+  <th:block th:replace="~{fragments/navbar :: navbar('user')}"></th:block>
+  <th:block th:replace="~{fragments/alerts :: alerts}"></th:block>
+  <section class="container py-5"><div class="sidebar-layout"><aside class="card side-nav"><a th:href="@{/user/}">Dashboard</a><a th:href="@{/user/cart}">My Cart</a><a th:href="@{/user/orders}">Checkout</a><a th:href="@{/user/user-orders}">My Orders</a><a th:href="@{/user/profile}">Profile</a></aside><main><div class="section-title"><h1>My cart</h1></div><div class="grid grid-2" style="align-items:start;"><div class="grid"><div class="cart-row" th:each="c : ${carts}"><img th:src="@{'/img/product_img/' + ${c.product.image}}"><div><h3 th:text="${c.product.title}"></h3><div class="text-muted">₹<span th:text="${c.product.discountPrice != null ? c.product.discountPrice : c.product.price}"></span></div><div class="qty-box mt-2"><a class="page-link" th:href="@{/user/cartQuantityUpdate(sy='de',cid=${c.id})}">-</a><strong th:text="${c.quantity}">1</strong><a class="page-link" th:href="@{/user/cartQuantityUpdate(sy='in',cid=${c.id})}">+</a></div></div><div class="cart-actions"><div class="price">₹<span th:text="${c.totalPrice}"></span></div></div></div><div class="empty card" th:if="${#lists.isEmpty(carts)}">Your cart is empty.</div></div><div class="card summary-card"><h2>Order summary</h2><div class="text-muted mt-3">Items total</div><div class="price mt-2">₹<span th:text="${totalOrderPrice != null ? totalOrderPrice : 0}"></span></div><a class="btn mt-4 w-100" th:href="@{/user/orders}">Proceed to checkout</a></div></div></main></div></section>
+  <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+  <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+</body>
+</html>

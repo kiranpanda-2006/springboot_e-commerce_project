@@ -1,0 +1,40 @@
+package com.ecom.util;
+
+import java.nio.charset.StandardCharsets;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+public final class RazorpaySignatureUtil {
+
+	private RazorpaySignatureUtil() {
+	}
+
+	public static boolean verifySignature(String orderId, String paymentId, String signature, String secret) {
+		if (isBlank(orderId) || isBlank(paymentId) || isBlank(signature) || isBlank(secret)) {
+			return false;
+		}
+		String payload = orderId + "|" + paymentId;
+		String expected = hmacSha256(payload, secret);
+		return expected.equals(signature);
+	}
+
+	private static String hmacSha256(String data, String secret) {
+		try {
+			Mac sha256Hmac = Mac.getInstance("HmacSHA256");
+			SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+			sha256Hmac.init(secretKey);
+			byte[] hash = sha256Hmac.doFinal(data.getBytes(StandardCharsets.UTF_8));
+			StringBuilder result = new StringBuilder();
+			for (byte b : hash) {
+				result.append(String.format("%02x", b));
+			}
+			return result.toString();
+		} catch (Exception e) {
+			throw new IllegalStateException("Unable to verify Razorpay signature", e);
+		}
+	}
+
+	private static boolean isBlank(String value) {
+		return value == null || value.isBlank();
+	}
+}

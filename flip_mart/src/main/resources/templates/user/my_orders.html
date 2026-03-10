@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head('My orders')}"></th:block>
+<body>
+  <th:block th:replace="~{fragments/navbar :: navbar('user')}"></th:block>
+  <th:block th:replace="~{fragments/alerts :: alerts}"></th:block>
+  <section class="container py-5"><div class="sidebar-layout"><aside class="card side-nav"><a th:href="@{/user/}">Dashboard</a><a th:href="@{/user/cart}">My Cart</a><a th:href="@{/user/orders}">Checkout</a><a th:href="@{/user/user-orders}">My Orders</a><a th:href="@{/user/profile}">Profile</a></aside><main><div class="section-title"><h1>My orders</h1></div><div class="card"><div class="table-wrap"><table class="table"><thead><tr><th>Order ID</th><th>Product</th><th>Amount</th><th>Status</th><th>Payment</th></tr></thead><tbody><tr th:each="o : ${orders}"><td th:text="${o.orderId}"></td><td th:text="${o.product.title}"></td><td>₹<span th:text="${o.price}"></span></td><td><span class="badge" th:text="${o.status}"></span></td><td th:text="${o.paymentType}"></td></tr></tbody></table></div><div class="empty" th:if="${#lists.isEmpty(orders)}">No orders found yet.</div></div></main></div></section>
+  <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+  <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+</body>
+</html>

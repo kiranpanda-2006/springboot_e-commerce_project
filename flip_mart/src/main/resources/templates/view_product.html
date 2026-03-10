@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head('Product details')}"></th:block>
+<body>
+  <th:block th:replace="~{fragments/navbar :: navbar('products')}"></th:block>
+  <th:block th:replace="~{fragments/alerts :: alerts}"></th:block>
+  
+<section class="container py-5">
+  <div class="grid grid-2">
+    <div class="card"><img th:src="@{'/img/product_img/' + ${product.image}}" style="width:100%;border-radius:22px;max-height:560px;object-fit:cover;"></div>
+    <div class="card form-card">
+      <span class="badge" th:text="${product.category}">Category</span>
+      <h1 class="mt-3" th:text="${product.title}">Title</h1>
+      <div class="price-row mt-3"><span class="price">₹<span th:text="${product.discountPrice != null ? product.discountPrice : product.price}"></span></span><span class="old-price" th:if="${product.discount > 0}">₹<span th:text="${product.price}"></span></span><span class="badge" th:if="${product.discount > 0}" th:text="${product.discount + '% OFF'}"></span></div>
+      <p class="mt-4 text-muted" th:text="${product.description}"></p>
+      <div class="grid grid-3 mt-4">
+        <div class="metric"><div class="text-muted">Stock</div><strong th:text="${product.stock}">0</strong></div>
+        <div class="metric"><div class="text-muted">Category</div><strong th:text="${product.category}">General</strong></div>
+        <div class="metric"><div class="text-muted">Status</div><strong th:text="${product.isActive} ? 'Active' : 'Hidden'">Active</strong></div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;">
+        <a class="btn" th:if="${user != null and user.role == 'ROLE_USER'}" th:href="@{/user/addCart(pid=${product.id},uid=${user.id})}">Add to cart</a>
+        <a class="btn btn-outline" th:if="${user == null}" th:href="@{/signin}">Login to buy</a>
+        <a class="btn btn-outline" th:href="@{/products}">Back to products</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+  <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+</body>
+</html>

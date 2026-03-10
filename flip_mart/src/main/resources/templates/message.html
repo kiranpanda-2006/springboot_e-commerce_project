@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head('Message')}"></th:block>
+<body>
+  <th:block th:replace="~{fragments/navbar :: navbar('auth')}"></th:block>
+  <th:block th:replace="~{fragments/alerts :: alerts}"></th:block>
+  <section class="container py-5"><div class="card form-card text-center" style="max-width:720px;margin:auto;"><h1>Notification</h1><p class="text-muted" th:text="${msg != null ? msg : errorMsg}">Message</p><a class="btn mt-4" th:href="@{/signin}">Go to login</a></div></section>
+  <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+  <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+</body>
+</html>

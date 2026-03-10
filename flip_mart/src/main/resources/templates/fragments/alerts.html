@@ -1,0 +1,34 @@
+<div th:fragment="alerts">
+  <div class="toast-stack">
+
+    <div class="toast success" data-toast th:if="${session.succMsg != null}">
+      <i class="fa-solid fa-circle-check" style="color:var(--success);"></i>
+      <div>
+        <strong>Success</strong>
+        <div th:text="${session.succMsg}"></div>
+      </div>
+    </div>
+
+    <div class="toast error" data-toast th:if="${session.errorMsg != null}">
+      <i class="fa-solid fa-circle-exclamation" style="color:var(--danger);"></i>
+      <div>
+        <strong>Error</strong>
+        <div th:text="${session.errorMsg}"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="confirmModal" class="modal-backdrop">
+    <div class="modal">
+      <div class="section-title">
+        <h3 class="mb-0">Please confirm</h3>
+      </div>
+      <p id="confirmMessage" class="text-muted">Are you sure?</p>
+      <div style="display:flex;gap:12px;justify-content:flex-end;">
+        <button class="btn btn-outline" type="button" data-close-modal>Cancel</button>
+        <a id="confirmAction" class="btn btn-danger" href="#">Yes, continue</a>
+      </div>
+    </div>
+  </div>
+</div>

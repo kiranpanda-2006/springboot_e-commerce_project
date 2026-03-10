@@ -1,0 +1,40 @@
+<div th:fragment="navbar(active)">
+<header class="navbar">
+  <div class="container nav-inner">
+    <a th:href="@{/}" class="brand">
+      <div class="logo">F</div>
+      <div>
+        <div>FlipMart</div>
+        <small class="text-muted">smart shopping platform</small>
+      </div>
+    </a>
+    <button class="btn btn-ghost mobile-nav-toggle" data-mobile-toggle><i class="fa-solid fa-bars"></i></button>
+    <nav class="nav-links">
+      <a class="nav-link" th:classappend="${active == 'home'} ? ' active'" th:href="@{/}">Home</a>
+      <a class="nav-link" th:classappend="${active == 'products'} ? ' active'" th:href="@{/products}">Products</a>
+      <a class="nav-link" th:if="${user != null and user.role == 'ROLE_USER'}" th:href="@{/user/cart}">Cart <span th:if="${countCart != null}" th:text="${countCart}"></span></a>
+      <a class="nav-link" th:if="${user != null and user.role == 'ROLE_USER'}" th:href="@{/user/user-orders}">My Orders</a>
+      <a class="nav-link" th:if="${user != null and user.role == 'ROLE_ADMIN'}" th:href="@{/admin/}">Admin</a>
+    </nav>
+    <div class="nav-actions">
+      <form th:action="@{/products}" method="get" class="searchbar">
+        <i class="fa-solid fa-magnifying-glass text-muted"></i>
+        <input type="text" name="ch" placeholder="Search products...">
+      </form>
+      <div th:if="${user == null}" style="display:flex;gap:10px;">
+        <a class="btn btn-outline" th:href="@{/signin}">Sign in</a>
+        <a class="btn" th:href="@{/register}">Register</a>
+      </div>
+      <div th:if="${user != null}" style="display:flex;gap:10px;align-items:center;">
+        <a class="btn btn-ghost" th:href="${user.role == 'ROLE_ADMIN'} ? @{/admin/profile} : @{/user/profile}">
+          <i class="fa-regular fa-user"></i>
+          <span th:text="${user.name}">Profile</span>
+        </a>
+        <form th:action="@{/logout}" method="post">
+          <button class="btn btn-outline" type="submit">Logout</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+</div>

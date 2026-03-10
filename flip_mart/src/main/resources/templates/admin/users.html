@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head('Users')}"></th:block>
+<body>
+  <th:block th:replace="~{fragments/navbar :: navbar('admin')}"></th:block>
+  <th:block th:replace="~{fragments/alerts :: alerts}"></th:block>
+  <section class="container py-5"><div class="sidebar-layout"><aside class="card side-nav"><a th:href="@{/admin/}">Overview</a><a th:href="@{/admin/category}">Categories</a><a th:href="@{/admin/loadAddProduct}">Add product</a><a th:href="@{/admin/products}">Products</a><a th:href="@{/admin/orders}">Orders</a><a th:href="@{/admin/users(type=1)}">Users</a><a th:href="@{/admin/add-admin}">Add admin</a><a th:href="@{/admin/profile}">Profile</a></aside><main><div class="section-title"><h1 th:text="${userType == 1} ? 'Customers' : 'Admins'">Users</h1></div><div class="card"><div class="table-wrap"><table class="table"><thead><tr><th>Name</th><th>Email</th><th>Mobile</th><th>Status</th><th>Action</th></tr></thead><tbody><tr th:each="u : ${users}"><td th:text="${u.name}"></td><td th:text="${u.email}"></td><td th:text="${u.mobileNumber}"></td><td th:text="${u.isEnable} ? 'Enabled' : 'Disabled'"></td><td><a class="page-link" th:href="@{/admin/updateSts(status=${!u.isEnable},id=${u.id},type=${userType})}" th:text="${u.isEnable} ? 'Disable' : 'Enable'"></a></td></tr></tbody></table></div></div></main></div></section>
+  <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+  <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+</body>
+</html>

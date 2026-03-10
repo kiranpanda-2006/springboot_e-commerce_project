@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head('Admin dashboard')}"></th:block>
+<body>
+  <th:block th:replace="~{fragments/navbar :: navbar('admin')}"></th:block>
+  <th:block th:replace="~{fragments/alerts :: alerts}"></th:block>
+  <section class="container py-5"><div class="sidebar-layout"><aside class="card side-nav"><a th:href="@{/admin/}">Overview</a><a th:href="@{/admin/category}">Categories</a><a th:href="@{/admin/loadAddProduct}">Add product</a><a th:href="@{/admin/products}">Products</a><a th:href="@{/admin/orders}">Orders</a><a th:href="@{/admin/users(type=1)}">Users</a><a th:href="@{/admin/add-admin}">Add admin</a><a th:href="@{/admin/profile}">Profile</a></aside><main><div class="section-title"><h1>Admin dashboard</h1><span class="badge"><i class="fa-solid fa-chart-line"></i> Live overview</span></div><div class="grid grid-4"><div class="metric"><div class="text-muted">Products</div><strong th:text="${productCount}">0</strong></div><div class="metric"><div class="text-muted">Categories</div><strong th:text="${categoryCount}">0</strong></div><div class="metric"><div class="text-muted">Orders</div><strong th:text="${orderCount}">0</strong></div><div class="metric"><div class="text-muted">Users</div><strong th:text="${userCount}">0</strong></div></div><div class="card mt-4"><h2>Quick actions</h2><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;"><a class="btn" th:href="@{/admin/loadAddProduct}">Add product</a><a class="btn btn-outline" th:href="@{/admin/category}">Manage categories</a><a class="btn btn-outline" th:href="@{/admin/orders}">Track orders</a></div></div></main></div></section>
+  <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+  <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+</body>
+</html>

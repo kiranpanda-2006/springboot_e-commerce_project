@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head('Login')}"></th:block>
+<body>
+  <th:block th:replace="~{fragments/navbar :: navbar('auth')}"></th:block>
+  <th:block th:replace="~{fragments/alerts :: alerts}"></th:block>
+  
+<section class="container py-5">
+  <div class="grid grid-2" style="align-items:center;">
+    <div class="card form-card">
+      <span class="badge"><i class="fa-solid fa-shield-heart"></i> Secure sign in</span>
+      <h1 class="mt-3">Welcome back to FlipMart</h1>
+      <p class="text-muted">Login using your existing account to access your cart, orders, and profile dashboard.</p>
+      <form th:action="@{/login}" method="post" class="mt-4">
+        <div class="field"><label>Email</label><input type="email" name="username" required placeholder="Enter your email"></div>
+        <div class="field mt-3"><label>Password</label>
+          <div style="display:flex;gap:10px;">
+            <input id="loginPassword" type="password" name="password" required placeholder="Enter password" style="flex:1;">
+            <button class="btn btn-outline" type="button" data-password-toggle="loginPassword">Show</button>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:16px;flex-wrap:wrap;">
+          <a class="text-muted" th:href="@{/forgot-password}">Forgot password?</a>
+          <button class="btn" type="submit">Login now</button>
+        </div>
+      </form>
+    </div>
+    <div class="card form-card">
+      <div class="section-title"><h2>Why this UI feels better</h2></div>
+      <div class="grid">
+        <div class="metric"><strong>Cleaner flow</strong><div class="text-muted">Focused form, simple actions, and rich toast feedback after each backend event.</div></div>
+        <div class="metric"><strong>Responsive layout</strong><div class="text-muted">Looks polished on mobile, tablet, and desktop without Bootstrap dependency.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+  <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+</body>
+</html>

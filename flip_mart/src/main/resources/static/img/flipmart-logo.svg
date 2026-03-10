@@ -1,0 +1,19 @@
+<svg width="220" height="64" viewBox="0 0 220 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g1" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C3AED"/>
+      <stop offset="1" stop-color="#06B6D4"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#E2E8F0" stop-opacity="0.88"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="8" width="48" height="48" rx="16" fill="url(#g1)"/>
+  <path d="M18 22H38.5L36.6 29H21.2L20.4 32H35.2C39 32 41.3 35.2 40.1 39L39.5 41C38.5 44.1 35.7 46 32.5 46H16.5L18.4 39H31.6L32.4 36H18.5C14.7 36 12.4 32.8 13.6 29L14.2 27C15.2 23.9 18 22 21.2 22Z" fill="white"/>
+  <circle cx="21" cy="48" r="3.2" fill="white" fill-opacity="0.95"/>
+  <circle cx="35" cy="48" r="3.2" fill="white" fill-opacity="0.95"/>
+  <text x="66" y="28" fill="url(#g2)" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800">Flip</text>
+  <text x="114" y="28" fill="#22D3EE" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800">_Mart</text>
+  <text x="68" y="46" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="10.5" font-weight="600" letter-spacing="1.4">SHOP SMARTER</text>
+</svg>

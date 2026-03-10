@@ -1,0 +1,26 @@
+<footer th:fragment="footer" class="footer">
+  <div class="container card" style="padding:24px 26px;">
+    <div class="grid grid-3">
+      <div>
+        <div class="brand"><div class="logo">F</div><div>FlipMart</div></div>
+        <p class="text-muted mt-3">A refreshed e-commerce UI crafted for your Spring Boot + Thymeleaf backend.</p>
+      </div>
+      <div>
+        <h3 class="mb-0">Quick links</h3>
+        <div class="mt-3" style="display:grid;gap:10px;">
+          <a th:href="@{/products}">Browse products</a>
+          <a th:href="@{/register}">Create account</a>
+          <a th:href="@{/forgot-password}">Forgot password</a>
+        </div>
+      </div>
+      <div>
+        <h3 class="mb-0">Highlights</h3>
+        <div class="mt-3" style="display:grid;gap:10px;">
+          <span class="badge"><i class="fa-solid fa-bolt"></i> Responsive dashboard</span>
+          <span class="badge"><i class="fa-solid fa-credit-card"></i> Razorpay ready checkout</span>
+          <span class="badge"><i class="fa-solid fa-bell"></i> Popup confirmations and toasts</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

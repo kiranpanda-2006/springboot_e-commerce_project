@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head('User dashboard')}"></th:block>
+<body>
+  <th:block th:replace="~{fragments/navbar :: navbar('user')}"></th:block>
+  <th:block th:replace="~{fragments/alerts :: alerts}"></th:block>
+  <section class="container py-5"><div class="sidebar-layout"><aside class="card side-nav"><a th:href="@{/user/}">Dashboard</a><a th:href="@{/user/cart}">My Cart</a><a th:href="@{/user/orders}">Checkout</a><a th:href="@{/user/user-orders}">My Orders</a><a th:href="@{/user/profile}">Profile</a></aside><main><div class="grid grid-4"><div class="metric"><div class="text-muted">Cart items</div><strong th:text="${countCart != null ? countCart : 0}">0</strong></div><div class="metric"><div class="text-muted">Profile</div><strong th:text="${user.name}">User</strong></div><div class="metric"><div class="text-muted">Email</div><strong style="font-size:1rem;" th:text="${user.email}"></strong></div><div class="metric"><div class="text-muted">Role</div><strong>Customer</strong></div></div><div class="card mt-4"><div class="section-title"><h2>Quick actions</h2></div><div style="display:flex;gap:12px;flex-wrap:wrap;"><a class="btn" th:href="@{/products}">Continue shopping</a><a class="btn btn-outline" th:href="@{/user/cart}">Open cart</a><a class="btn btn-outline" th:href="@{/user/profile}">Edit profile</a></div></div></main></div></section>
+  <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+  <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+</body>
+</html>

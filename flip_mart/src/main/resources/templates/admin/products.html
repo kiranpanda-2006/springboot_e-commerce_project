@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head('Products')}"></th:block>
+<body>
+  <th:block th:replace="~{fragments/navbar :: navbar('admin')}"></th:block>
+  <th:block th:replace="~{fragments/alerts :: alerts}"></th:block>
+  <section class="container py-5"><div class="sidebar-layout"><aside class="card side-nav"><a th:href="@{/admin/}">Overview</a><a th:href="@{/admin/category}">Categories</a><a th:href="@{/admin/loadAddProduct}">Add product</a><a th:href="@{/admin/products}">Products</a><a th:href="@{/admin/orders}">Orders</a><a th:href="@{/admin/users(type=1)}">Users</a><a th:href="@{/admin/add-admin}">Add admin</a><a th:href="@{/admin/profile}">Profile</a></aside><main><div class="section-title"><h1>Products</h1></div><div class="card"><form th:action="@{/admin/products}" method="get" class="toolbar"><div class="field" style="flex:1;"><label>Search</label><input name="ch" placeholder="Search products"></div><div style="display:flex;align-items:end;"><button class="btn" type="submit">Search</button></div></form><div class="table-wrap mt-4"><table class="table"><thead><tr><th>Image</th><th>Title</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th></tr></thead><tbody><tr th:each="p : ${products}"><td><img th:src="@{'/img/product_img/' + ${p.image}}" style="width:60px;height:60px;border-radius:15px;object-fit:cover;"></td><td th:text="${p.title}"></td><td th:text="${p.category}"></td><td>₹<span th:text="${p.discountPrice != null ? p.discountPrice : p.price}"></span></td><td th:text="${p.stock}"></td><td style="display:flex;gap:8px;flex-wrap:wrap;"><a class="page-link" th:href="@{'/admin/editProduct/' + ${p.id}}">Edit</a><a class="page-link" data-confirm="Delete this product?" th:href="@{'/admin/deleteProduct/' + ${p.id}}">Delete</a></td></tr></tbody></table></div></div></main></div></section>
+  <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+  <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+</body>
+</html>

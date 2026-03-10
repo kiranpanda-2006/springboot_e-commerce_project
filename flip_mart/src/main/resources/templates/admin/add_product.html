@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head('Add product')}"></th:block>
+<body>
+  <th:block th:replace="~{fragments/navbar :: navbar('admin')}"></th:block>
+  <th:block th:replace="~{fragments/alerts :: alerts}"></th:block>
+  <section class="container py-5"><div class="sidebar-layout"><aside class="card side-nav"><a th:href="@{/admin/}">Overview</a><a th:href="@{/admin/category}">Categories</a><a th:href="@{/admin/loadAddProduct}">Add product</a><a th:href="@{/admin/products}">Products</a><a th:href="@{/admin/orders}">Orders</a><a th:href="@{/admin/users(type=1)}">Users</a><a th:href="@{/admin/add-admin}">Add admin</a><a th:href="@{/admin/profile}">Profile</a></aside><main><div class="card form-card"><div class="section-title"><h1>Add product</h1><span class="badge"><i class="fa-solid fa-box-open"></i> Catalog management</span></div><form th:action="@{/admin/saveProduct}" method="post" enctype="multipart/form-data"><div class="form-grid"><div class="field"><label>Title</label><input name="title" required></div><div class="field"><label>Category</label><select name="category"><option th:each="c : ${categories}" th:value="${c.name}" th:text="${c.name}"></option></select></div><div class="field"><label>Price</label><input type="number" step="0.01" name="price" required></div><div class="field"><label>Discount %</label><input type="number" name="discount" value="0"></div><div class="field"><label>Stock</label><input type="number" name="stock" required></div><div class="field"><label>Status</label><select name="isActive"><option value="true">Active</option><option value="false">Inactive</option></select></div><div class="field" style="grid-column:1/-1;"><label>Description</label><textarea name="description"></textarea></div><div class="field"><label>Product image</label><input type="file" name="file" required></div></div><button class="btn mt-4" type="submit">Save product</button></form></div></main></div></section>
+  <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+  <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+</body>
+</html>

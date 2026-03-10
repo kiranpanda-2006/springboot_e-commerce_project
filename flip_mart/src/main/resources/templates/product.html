@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head('Products')}"></th:block>
+<body>
+  <th:block th:replace="~{fragments/navbar :: navbar('products')}"></th:block>
+  <th:block th:replace="~{fragments/alerts :: alerts}"></th:block>
+  
+<section class="container page-hero">
+  <div class="section-title"><h1>Discover products</h1><span class="badge"><i class="fa-solid fa-filter-circle-dollar"></i> Updated product catalog</span></div>
+  <div class="card toolbar">
+    <form class="toolbar" th:action="@{/products}" method="get" style="width:100%;">
+      <div class="field" style="min-width:220px;"><label>Category</label><select name="category"><option value="">All</option><option th:each="c : ${categories}" th:value="${c.name}" th:text="${c.name}" th:selected="${paramValue == c.name}"></option></select></div>
+      <div class="field" style="flex:1;"><label>Search</label><input name="ch" placeholder="Search by keyword"></div>
+      <div style="display:flex;align-items:end;"><button class="btn" type="submit">Apply</button></div>
+    </form>
+  </div>
+</section>
+<section class="container py-5">
+  <div class="section-title"><h2 th:text="${productsSize + ' items found'}">0 items found</h2></div>
+  <div class="product-grid" th:if="${productsSize > 0}">
+    <div class="card product-card" th:each="p : ${products}">
+      <a class="product-media" th:href="@{'/product/' + ${p.id}}"><img th:src="@{'/img/product_img/' + ${p.image}}"></a>
+      <div class="product-body">
+        <div class="chip" th:text="${p.category}"></div>
+        <h3 class="product-title mt-3" th:text="${p.title}"></h3>
+        <p class="text-muted" th:text="${#strings.abbreviate(p.description, 120)}"></p>
+        <div class="price-row"><span class="price">₹<span th:text="${p.discountPrice != null ? p.discountPrice : p.price}"></span></span><span class="old-price" th:if="${p.discount > 0}">₹<span th:text="${p.price}"></span></span></div>
+        <div class="product-actions"><a class="btn btn-outline" th:href="@{'/product/' + ${p.id}}">View</a><a class="btn" th:if="${user != null and user.role == 'ROLE_USER'}" th:href="@{/user/addCart(pid=${p.id},uid=${user.id})}">Add cart</a><a class="btn" th:if="${user == null}" th:href="@{/signin}">Login</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="card empty" th:if="${productsSize == 0}">No products matched your filter.</div>
+  <div class="pagination mt-4" th:if="${totalPages > 0}">
+    <a class="page-link" th:if="${!isFirst}" th:href="@{/products(pageNo=${pageNo-1},pageSize=${pageSize},category=${paramValue},ch=${param.ch})}">Previous</a>
+    <span class="page-link active" th:text="${pageNo + 1}"></span>
+    <a class="page-link" th:if="${!isLast}" th:href="@{/products(pageNo=${pageNo+1},pageSize=${pageSize},category=${paramValue},ch=${param.ch})}">Next</a>
+  </div>
+</section>
+
+  <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+  <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+</body>
+</html>

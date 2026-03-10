@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${title} + ' | Flip_Mart'">Flip_Mart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  <script defer th:src="@{/js/app.js}"></script>
+</head>
+<body>
+<th:block th:fragment="navbar(active)">
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" th:href="@{/}">
+        <span class="brand-logo">F</span>
+        <span><strong>Flip_Mart</strong><small>Smart shopping UI</small></span>
+      </a>
+      <button class="menu-toggle" type="button" data-menu-toggle>☰</button>
+      <nav class="nav-links" data-nav>
+        <a th:href="@{/}" th:classappend="${active=='home'} ? ' active' : ''">Home</a>
+        <a th:href="@{/products}" th:classappend="${active=='products'} ? ' active' : ''">Products</a>
+        <a th:href="@{/user/cart}" th:classappend="${active=='cart'} ? ' active' : ''">Cart <span class="badge" th:text="${countCart != null ? countCart : 0}">0</span></a>
+        <a th:href="@{/user/user-orders}" th:classappend="${active=='orders'} ? ' active' : ''">Orders</a>
+        <a th:href="@{/signin}" th:if="${user == null}" th:classappend="${active=='signin'} ? ' active' : ''">Sign in</a>
+      </nav>
+      <div class="nav-actions">
+        <div class="theme-select-wrap">
+          <span class="theme-chip">Theme</span>
+          <select class="theme-select" data-theme-select>
+            <option value="dark">Neon</option>
+            <option value="ocean">Ocean</option>
+            <option value="sunset">Sunset</option>
+            <option value="light">Light</option>
+          </select>
+        </div>
+        <button class="account-trigger" type="button" data-account-open>
+			<span class="account-avatar"
+			      th:text="${user != null and user.name != null and not #strings.isEmpty(user.name) ? #strings.substring(user.name,0,1) : 'G'}">
+			G
+			</span>         <span class="account-copy">
+            <strong th:text="${user != null ? user.name : 'Guest User'}">Guest User</strong>
+            <small th:text="${user != null ? 'Open account panel' : 'Login / Register'}">Open account panel</small>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="account-modal" data-account-modal>
+    <div class="account-modal-backdrop" data-account-close></div>
+    <div class="account-modal-panel panel">
+      <div class="account-modal-top">
+        <div class="account-modal-user">
+			<span class="account-avatar"
+			      th:text="${user != null and user.name != null and not #strings.isEmpty(user.name) ? #strings.substring(user.name,0,1) : 'G'}">
+			G
+			</span>
+          <div>
+            <h3 th:text="${user != null ? user.name : 'Welcome to Flip_Mart'}">Welcome</h3>
+            <p class="muted mb-0" th:text="${user != null ? user.email : 'Sign in to save cart, orders, and account settings.'}">Sign in</p>
+          </div>
+        </div>
+        <button class="icon-btn" type="button" data-account-close style="display:grid;place-items:center">✕</button>
+      </div>
+
+      <div class="account-modal-grid">
+        <div class="account-card glass-soft">
+          <span class="section-kicker">Quick actions</span>
+          <div class="quick-links" th:if="${user != null}">
+            <a th:if="${#strings.contains(user.role,'ADMIN')}" th:href="@{/admin/}">Open admin dashboard</a>
+            <a th:if="${user.role == 'ROLE_USER'}" th:href="@{/user/}">Open user dashboard</a>
+            <a th:if="${user.role == 'ROLE_USER'}" th:href="@{/user/profile}">Manage profile</a>
+            <a th:if="${user.role == 'ROLE_USER'}" th:href="@{/user/cart}">Open cart</a>
+            <a th:if="${user.role == 'ROLE_USER'}" th:href="@{/user/user-orders}">Track orders</a>
+            <a th:if="${#strings.contains(user.role,'ADMIN')}" th:href="@{/admin/profile}">Admin profile</a>
+          </div>
+          <div class="quick-links" th:if="${user == null}">
+            <a th:href="@{/signin}">Login to account</a>
+            <a th:href="@{/register}">Create account</a>
+            <a th:href="@{/products}">Browse products</a>
+          </div>
+        </div>
+        <div class="account-card glass-soft">
+          <span class="section-kicker">Switch theme</span>
+          <div class="theme-grid">
+            <button class="theme-swatch is-dark" type="button" data-set-theme="dark">Neon</button>
+            <button class="theme-swatch is-blue" type="button" data-set-theme="ocean">Ocean</button>
+            <button class="theme-swatch is-sunset" type="button" data-set-theme="sunset">Sunset</button>
+            <button class="theme-swatch is-light" type="button" data-set-theme="light">Light</button>
+          </div>
+          <p class="muted mb-0">The selected look stays saved in local storage for the next visit.</p>
+          <form th:if="${user != null}" th:action="@{/logout}" method="post" class="mt-2">
+            <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button class="btn btn-danger" type="submit">Logout</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</th:block>
+
+<th:block th:fragment="alerts()">
+  <div class="server-alerts" th:attr="data-success=${session.succMsg},data-error=${session.errorMsg}"></div>
+  <th:block th:if="${session.succMsg != null}" th:with="x=${#session.removeAttribute('succMsg')}"></th:block>
+  <th:block th:if="${session.errorMsg != null}" th:with="x=${#session.removeAttribute('errorMsg')}"></th:block>
+</th:block>
+
+<th:block th:fragment="footer()">
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="brand footer-brand"><span class="brand-logo">F</span><strong>Flip_Mart</strong></div>
+        <p class="muted">Responsive ecommerce UI with multi-theme switching, popup feedback, polished cards, and mobile-first layouts.</p>
+      </div>
+      <div>
+        <h4>Quick links</h4>
+        <a th:href="@{/products}">Shop</a>
+        <a th:href="@{/register}">Register</a>
+        <a th:href="@{/forgot-password}">Forgot password</a>
+      </div>
+      <div>
+        <h4>Categories</h4>
+        <th:block th:if="${categorys != null}">
+          <a th:each="c : ${categorys}" th:href="@{/products(category=${c.name})}" th:text="${c.name}">Category</a>
+        </th:block>
+        <span class="muted" th:if="${categorys == null}">Categories will appear here</span>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>© 2026 Flip_Mart</span><span>Neon · Ocean · Sunset · Light</span>
+    </div>
+  </footer>
+  <div class="toast-stack" data-toast-stack></div>
+  <div class="popup" data-generic-popup>
+    <div class="popup-backdrop" onclick="this.parentElement.classList.remove('show')"></div>
+    <div class="popup-card panel">
+      <h3 class="popup-title" data-popup-title>Notice</h3>
+      <div data-popup-body class="muted">Popup message</div>
+      <div class="popup-actions">
+        <button class="btn btn-primary" type="button" onclick="this.closest('.popup').classList.remove('show')">Okay</button>
+      </div>
+    </div>
+  </div>
+</th:block>
+</body>
+</html>
